@@ -29,8 +29,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // attempt to read weights from DB
   const supabaseAdmin = getSupabaseAdmin()
-  const { data: wdata } = await supabaseAdmin.from('weights').select('*').order('updated_at',{ascending:false}).limit(1).single().catch(()=>({data:null}))
-  const weights = (wdata?.weights as Weights) ?? DEFAULT_WEIGHTS
+  let wdata: any = null;
+try {
+  const { data } = await supabaseAdmin
+    .from('weights')
+    .select('*')
+    .order('updated_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  wdata = data;
+} catch (err) {
+  console.error('Failed to fetch weights', err);
+}
+const weights = (wdata?.weights as Weights) ?? DEFAULT_WEIGHTS;
 
   const skillScore = clamp((payload.skills/5)*100*weights.skills)
   const perfScore = clamp((payload.performance/5)*100*weights.performance)
