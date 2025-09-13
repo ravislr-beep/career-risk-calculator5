@@ -1,15 +1,18 @@
+// pages/api/auth/callback.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../../lib/supabaseClient';
+import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  // Get the session from the URL
-  const { data, error } = await supabase.auth.getSessionFromUrl({ storeSession: true });
+  const supabase = createServerSupabaseClient({ req, res });
+
+  // This automatically handles the OAuth redirect and stores the session
+  const { data, error } = await supabase.auth.getSession();
 
   if (error) {
     console.error('OAuth callback error:', error.message);
     return res.status(400).json({ error: error.message });
   }
 
-  // Redirect to your app after successful login
+  // Redirect to home after successful login
   res.redirect('/');
 }
