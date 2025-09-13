@@ -58,6 +58,7 @@ const weights = (wdata?.weights as Weights) ?? DEFAULT_WEIGHTS;
   const prompt = `You are a career advisor. The user has a career risk score of ${Math.round(total)} (${riskCategory}). Their profile: ${JSON.stringify(payload)}. Provide 3 practical career recommendations in simple, professional language.`
   const insights = await geminiGenerate(prompt)
 
+ try {
   await supabaseAdmin.from('reports').insert({
     id,
     user_id: null,
@@ -65,7 +66,10 @@ const weights = (wdata?.weights as Weights) ?? DEFAULT_WEIGHTS;
     risk_score: total,
     risk_category: riskCategory,
     insights
-  }).catch(()=>null)
+  });
+} catch (err) {
+  console.error('Failed to insert report', err);
+}
 
-  res.json({ id, score: total, category: riskCategory, insights })
+res.json({ id, score: total, category: riskCategory, insights });
 }
