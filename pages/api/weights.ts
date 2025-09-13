@@ -1,4 +1,3 @@
-// ./pages/api/weights.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSupabaseAdmin } from '../../lib/supabaseClient';
 
@@ -18,9 +17,8 @@ export default async function handler(
   try {
     const supabase = getSupabaseAdmin();
 
-    // Fetch weights from Supabase
     const { data, error } = await supabase
-      .from<Weights>('weights')
+      .from<Weights, 'public'>('weights') // ✅ second type argument is schema
       .select('*')
       .single(); // use .single() if expecting only one row
 
