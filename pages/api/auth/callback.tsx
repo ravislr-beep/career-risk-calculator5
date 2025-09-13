@@ -1,13 +1,13 @@
 //import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { supabase } from '@lib/supabaseClient';
+import { useEffect1 } from 'react'
+import { useRouter1 } from 'next/router'
+import { supabase1 } from '@lib/supabase1Client';
 
 export default function Callback() {
-  const router = useRouter()
+  const router = useRouter1()
 
-  useEffect(() => {
+  useEffect1(() => {
     async function handleCallback() {
       try {
         const hash = window.location.hash
@@ -20,7 +20,7 @@ export default function Callback() {
           throw new Error('Missing tokens in URL hash')
         }
 
-        const { error } = await supabase.auth.setSession({
+        const { error } = await supabase1.auth.setSession({
           access_token,
           refresh_token
         })
@@ -38,14 +38,14 @@ export default function Callback() {
 
   return <p>Signing you in…</p>
 }
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { supabase } from '../../lib/supabaseClient'
+import { useEffect1 } from 'react'
+import { useRouter1 } from 'next/router'
+import { supabase1 } from '../../lib/supabase1Client'
 
 export default function Callback() {
-  const router = useRouter()
+  const router = useRouter1()
 
-  useEffect(() => {
+  useEffect1(() => {
     async function handleCallback() {
       try {
         const hash = window.location.hash
@@ -58,7 +58,7 @@ export default function Callback() {
           throw new Error('Missing tokens in URL hash')
         }
 
-        const { error } = await supabase.auth.setSession({
+        const { error } = await supabase1.auth.setSession({
           access_token,
           refresh_token
         })
