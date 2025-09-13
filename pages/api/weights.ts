@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSupabaseAdmin } from '../../lib/supabaseClient';
+import { getSupabaseAdmin } from '@lib/supabaseClient';
 
 type Weights = {
   skills: number;
@@ -10,35 +10,25 @@ type Weights = {
   plateau: number;
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const supabase = getSupabaseAdmin();
 
-    // Get access token from Authorization header
     const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).json({ error: 'Missing Authorization header' });
-    }
+    if (!authHeader) return res.status(401).json({ error: 'Missing Authorization header' });
 
     const token = authHeader.split(' ')[1];
-    if (!token) {
-      return res.status(401).json({ error: 'Invalid Authorization header' });
-    }
+    if (!token) return res.status(401).json({ error: 'Invalid Authorization header' });
 
     // Verify user session
     const { data: userData, error: sessionError } = await supabase.auth.getUser(token);
-    if (sessionError || !userData) {
-      return res.status(401).json({ error: 'Invalid or expired session' });
-    }
+    if (sessionError || !userData) return res.status(401).json({ error: 'Invalid or expired session' });
 
-    // Fetch weights from Supabase
+    // Fetch weights
     const { data, error } = await supabase
-      .from<'weights', Weights>('weights') // table name + row type
+      .from<'weights', Weights>('weights')
       .select('*')
-      .single(); // remove .single() if you have multiple rows
+      .single();
 
     if (error) throw error;
 
