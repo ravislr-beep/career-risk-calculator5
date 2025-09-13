@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <rect width="900" height="500" rx="24" fill="#0f172a"/>
+  <g transform="translate(40,30)">
+    <text x="0" y="30" fill="#ffffff" font-size="24" font-family="Arial" font-weight="700">Career Risk Calculator — Result</text>
+    <rect x="0" y="50" width="820" height="120" rx="12" fill="#0b1220" />
+    <text x="20" y="90" fill="#9ca3af" font-size="16">Score</text>
+    <text x="20" y="120" fill="#ffffff" font-size="40" font-weight="700">72 — Medium risk</text>
+    <rect x="0" y="190" width="820" height="220" rx="12" fill="#071023" />
+    <text x="20" y="230" fill="#9ca3af" font-size="16">Gemini Insights</text>
+    <foreignObject x="20" y="250" width="780" height="170">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="color:#e5e7eb;font-family:Arial;font-size:14px;line-height:1.4">
+        <p><strong>1.</strong> Expand your network by reaching out to 2-3 alumni each week with a short update.</p>
+        <p><strong>2.</strong> Update your CV to highlight measurable outcomes and include a one-line summary at the top.</p>
+        <p><strong>3.</strong> Seek a short internal project to broaden skills in the next 3 months.</p>
+      </div>
+    </foreignObject>
+  </g>
+</svg>
