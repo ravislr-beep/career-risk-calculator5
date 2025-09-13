@@ -18,13 +18,11 @@ export default async function handler(
     const supabase = getSupabaseAdmin();
 
     const { data, error } = await supabase
-      .from<Weights, 'public'>('weights') // ✅ second type argument is schema
+      .from<'weights', Weights>('weights') // ✅ Correct generic order
       .select('*')
-      .single(); // use .single() if expecting only one row
+      .single(); // use .single() if expecting one row
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
     res.status(200).json({ data });
   } catch (err) {
