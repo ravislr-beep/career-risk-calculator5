@@ -1,6 +1,6 @@
 // pages/api/auth/callback.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabase } from '../../lib/supabaseClient';
+import { supabase } from '../../lib/supabaseClient.ts';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
