@@ -17,10 +17,28 @@ export default async function handler(
   try {
     const supabase = getSupabaseAdmin();
 
+    // Get access token from Authorization header
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ error: 'Missing Authorization header' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ error: 'Invalid Authorization header' });
+    }
+
+    // Verify user session
+    const { data: userData, error: sessionError } = await supabase.auth.getUser(token);
+    if (sessionError || !userData) {
+      return res.status(401).json({ error: 'Invalid or expired session' });
+    }
+
+    // Fetch weights from Supabase
     const { data, error } = await supabase
-      .from<'weights', Weights>('weights') // ✅ Correct generic order
+      .from<'weights', Weights>('weights') // table name + row type
       .select('*')
-      .single(); // use .single() if expecting one row
+      .single(); // remove .single() if you have multiple rows
 
     if (error) throw error;
 
